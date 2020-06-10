@@ -29,4 +29,7 @@ function PlayerMovement(){
 	echo "Player position is : "$Player_one_Position
 }
 
-PlayerMovement
+while [ $Player_one_Position -lt 100 ]
+do
+	PlayerMovement
+done
