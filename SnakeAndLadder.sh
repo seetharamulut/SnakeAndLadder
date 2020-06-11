@@ -10,19 +10,20 @@ die_Count=0
 function playerOption(){
 
 	player_Position=$1
+	NO_PLAY=0
+	LADDER=1
+	SNAKE=2
 
 	die_Value=$(( (( $RANDOM%6 ))+1 ))
 
 	case $(( (( $RANDOM%3 ))+1 )) in
 
-		1) player_Position=$player_Position
-		   echo "noplay" ;;
+		$NO_PLAY) player_Position=$player_Position ;;
 
-		2) player_Position=$(( $player_Position+$die_Value ))
-		   echo "player gone through ladder" ;;
+		$LADDER) player_Position=$(( $player_Position+$die_Value )) ;;
 
-		3) player_Position=$(( $player_Position-$die_Value ))
-		   echo "player gone through snake" ;;
+		$SNAKE) player_Position=$(( $player_Position-$die_Value )) ;;
+
 	esac
 
 	if [ $player_Position -lt 0 ]
@@ -33,6 +34,7 @@ function playerOption(){
 		player_Position=$(( $player_Position-$die_Value ))
 	fi
 
+	echo $player_Position
 }
 
 function player_Selection(){
@@ -41,15 +43,12 @@ function player_Selection(){
 	while [[ $player_One_Position -lt 100 ]] && [[ $player_Two_Position -lt 100 ]]
 	do
 
-		playerOption $player_One_Position
-
-		player_One_Position=$player_Position
+		player_One_Position=$(playerOption $player_One_Position)
 
 		echo "player one position is : "$player_One_Position
 
-		playerOption $player_Two_Position
+		player_Two_Position=$(playerOption $player_Two_Position)
 
-		player_Two_Position=$player_Position
 		echo "player two position is : "$player_Two_Position
 
 		die_Count=$(( $die_Count+1 ))
