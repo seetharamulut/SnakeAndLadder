@@ -2,65 +2,64 @@
 
 echo "welcome to snake and ladder game"
 
-player_One_Position=0
-player_Two_Position=0
+playerOnePosition=0
+playerTwoPosition=0
 
-die_Count=0
+dieCount=0
 
 function playerOption(){
 
-	player_Position=$1
-	NO_PLAY=0
+	playerPosition=$1
+	NOPLAY=0
 	LADDER=1
 	SNAKE=2
 
-	die_Value=$(( (( $RANDOM%6 ))+1 ))
+	dieValue=$(( (( $RANDOM%6 ))+1 ))
 
 	case $(( (( $RANDOM%3 ))+1 )) in
 
-		$NO_PLAY) player_Position=$player_Position ;;
+		$NOPLAY) playerPosition=$playerPosition ;;
 
-		$LADDER) player_Position=$(( $player_Position+$die_Value )) ;;
+		$LADDER) playerPosition=$(( $playerPosition+$dieValue )) ;;
 
-		$SNAKE) player_Position=$(( $player_Position-$die_Value )) ;;
+		$SNAKE) playerPosition=$(( $playerPosition-$dieValue )) ;;
 
 	esac
 
-	if [ $player_Position -lt 0 ]
+	if [ $playerPosition -lt 0 ]
 	then
-		player_Position=0
-	elif [ $player_Position -gt 100 ]
+		playerPosition=0
+	elif [ $playerPosition -gt 100 ]
 	then
-		player_Position=$(( $player_Position-$die_Value ))
+		playerPosition=$(( $playerPosition-$dieValue ))
 	fi
 
-	echo $player_Position
+	echo $playerPosition
 }
 
-function player_Selection(){
+function playerSelection(){
 
 
-	while [[ $player_One_Position -lt 100 ]] && [[ $player_Two_Position -lt 100 ]]
+	while [[ $playerOnePosition -lt 100 ]] && [[ $playerTwoPosition -lt 100 ]]
 	do
 
-		player_One_Position=$(playerOption $player_One_Position)
+		playerOnePosition=$(playerOption $playerOnePosition)
 
-		echo "player one position is : "$player_One_Position
+		echo "player one position is : "$playerOnePosition
 
-		player_Two_Position=$(playerOption $player_Two_Position)
+		playerTwoPosition=$(playerOption $playerTwoPosition)
 
-		echo "player two position is : "$player_Two_Position
+		echo "player two position is : "$playerTwoPosition
 
-		die_Count=$(( $die_Count+1 ))
-
+		dieCount=$(( $die_Count+1 ))
 	done
 }
 
-function winner_Declaration(){
+function winnerDeclaration(){
 
-	player_Selection
+	playerSelection
 
-	if [ $player_One_Position -eq 100 ]
+	if [ $playerOnePosition -eq 100 ]
 	then
 
 		echo "Player one won the game"
@@ -68,7 +67,7 @@ function winner_Declaration(){
 		echo "Player two won the game"
 	fi
 
-	echo "number of times dies rolled to win is : "$die_Count
+	echo "number of times dies rolled to win is : "$dieCount
 }
 
-winner_Declaration
+winnerDeclaration
